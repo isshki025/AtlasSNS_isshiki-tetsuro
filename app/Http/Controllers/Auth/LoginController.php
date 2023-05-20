@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    // protected $redirectTo = '/top';
+    protected $redirectTo = '/top';
 
     /**
      * Create a new controller instance.
@@ -43,19 +43,27 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         if ($request->isMethod('post')) {
+            $request->validate([
+                'mail' => 'required',
+                'password' => 'required',
+            ], [
+                'mail.required' => 'メールアドレスは必須です。',
+                'password.required' => 'パスワードは必須です。',
+            ]);
 
             $data = $request->only('mail', 'password');
-            // ログインが成功したら、トップページへ
-            //↓ログイン条件は公開時には消すこと
             if (Auth::attempt($data)) {
-                return redirect()->intended('top');
+                return redirect()->intended('/top');
+            } else {
+                return back()->withErrors([
+                    'login' => 'メールアドレスまたはパスワードが違います。',
+                ]);
             }
         }
         return view("auth.login");
     }
-    public function logout(Request $request)
+    protected function loggedOut(Request $request)
     {
-        Auth::logout();
         return redirect()->route('login');
     }
 }

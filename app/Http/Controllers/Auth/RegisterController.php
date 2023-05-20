@@ -52,7 +52,7 @@ class RegisterController extends Controller
                 [
                     'username' => 'required|min:2|max:12',
                     'mail' => 'required|email|min:5|max:40|unique:users',
-                    'password' => 'required|string|between:8,20',
+                    'password' => 'required|string|between:8,20|alpha_num',
                     'password_confirmation' => 'required|same:password'
                 ],
                 [
@@ -67,6 +67,7 @@ class RegisterController extends Controller
                     'password.required' => 'パスワードは必須です。',
                     'password.string' => 'パスワードは文字列で入力してください。',
                     'password.between' => 'パスワードは8文字以上、20文字以内で入力してください。',
+                    'password.alpha_num' => 'パスワードは英数字のみで入力してください。',
                     'password_confirmation.required' => 'パスワード確認用の入力は必須です。',
                     'password_confirmation.same' => 'パスワード確認用の入力がパスワードと一致しません。',
                 ]

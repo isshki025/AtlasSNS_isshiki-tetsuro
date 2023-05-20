@@ -24,24 +24,27 @@
 <body>
     <header>
         <div id="head">
-            <h1><a><img src="images/logo.png"></a></h1>
-            <div id="">
-                <div id="">
-                    <p>{{ Auth::user()->name }} さん<img src="images/arrow.png"></p>
-                    <div>
+            <h1><a href="/top"><img src="{{ asset('storage/images/atlas.png') }}"></a></h1>
+            <div class="head_nav" id="">
+                <div class="head_user" id="">
+                    <p>{{ Auth::user()->username }} さん</p>
+                    <button type="button" name="mene" id="toggleBtn"></button>
+                    <img class="user-image" src="{{ asset('storage/images/'.Auth::user()->images) }}" alt="アイコン">
+                    <div class="nav-box">
                         <ul>
-                            <li><a href="/top">ホーム</a></li>
-                            <li><a href="/profile">プロフィール</a></li>
+                            <li><a href="/top">HOME</a></li>
+                            <li><a href="/profile">プロフィール編集</a></li>
                             <li>
-                                <!-- <a href="/logout">ログアウト</a> -->
-                                <form action="{{ route('logout') }}" method="POST">
+                                <a href="{{ route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
-                                    <a href="">ログアウト</a>
                                 </form>
                             </li>
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
     </header>
     <div id="row">
         <div id="container">
@@ -49,25 +52,24 @@
         </div>
         <div id="side-bar">
             <div id="confirm">
-                <p>〇〇さんの</p>
+                <p>{{ Auth::user()->username }} さんの</p>
                 <div>
                     <p>フォロー数</p>
-                    <p>〇〇名</p>
+                    <p>{{ isset($followingsCount) ? $followingsCount : 0 }}人</p>
                 </div>
-                <p class="btn"><a href="">フォローリスト</a></p>
+                <p class="btn"><a href="{{ route('followList') }}">フォローリスト</a></p>
                 <div>
                     <p>フォロワー数</p>
-                    <p>〇〇名</p>
+                    <p>{{ isset($followersCount) ? $followersCount : 0 }}人</p>
                 </div>
-                <p class="btn"><a href="">フォロワーリスト</a></p>
+                <p class="btn"><a href="{{ route('followerList') }}">フォロワーリスト</a></p>
             </div>
-            <p class="btn"><a href="">ユーザー検索</a></p>
+            <p class="btn"><a href="{{ route('users.search') }}">ユーザー検索</a></p>
         </div>
     </div>
     <footer>
     </footer>
-    <script src="JavaScriptファイルのURL"></script>
-    <script src="JavaScriptファイルのURL"></script>
+    <script src="{{ asset('js/function.js') }}"></script>
 </body>
 
 </html>

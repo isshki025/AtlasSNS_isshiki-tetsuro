@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -11,17 +14,12 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-// Route::get('/home', 'HomeController@index')->name('home');
-
-//Auth::routes();
+// Auth::routes();
 
 
 //ログアウト中のページ
 Route::group(['middleware' => ['guest']], function () {
-  Route::get('/login', 'Auth\LoginController@login');
+  Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
   Route::post('/login', 'Auth\LoginController@login');
 
   Route::get('/register', 'Auth\RegisterController@register');
@@ -31,17 +29,27 @@ Route::group(['middleware' => ['guest']], function () {
   Route::post('/added', 'Auth\RegisterController@added');
 });
 
-//ログイン中のページ
-
-Route::group(['middleware' => ['auth']], function () {
+Route::middleware(['loginUserCheck'])->group(function () {
   Route::get('/top', 'PostsController@index');
+  Route::post('/top', 'PostsController@store')->name('posts.store');
+  Route::patch('/posts/{post}', 'PostsController@update')->name('posts.update');
+  Route::delete('/posts/{post}', 'PostsController@destroy')->name('posts.destroy');
 
-  Route::get('/profile', 'UsersController@profile');
+  Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
-  Route::get('/search', 'UsersController@index');
+  Route::get('/profile', 'UsersController@edit')->name('profile.edit');
+  Route::post('/profile', 'UsersController@update')->name('profile.update');
 
-  Route::get('/follow-list', 'PostsController@index');
+  Route::get('/profile/{id}', 'UsersController@show');
+
+  Route::get('/search', 'UsersController@search')->name('users.search');
+
+  Route::post('/follow/{user}', 'FollowsController@store')->name('follow');
+  Route::delete('/unfollow/{user}', 'FollowsController@destroy')->name('unfollow');
+  Route::post('/users/{user}/follow', 'UsersController@follow')->name('users.follow');
+  Route::delete('/users/{user}/unfollow', 'UsersController@unfollow')->name('users.unfollow');
+
+  Route::get('/follow-list', 'FollowsController@followList')->name('followList');
   Route::get('/follower-list', 'PostsController@index');
-  // Route::post('logout', 'Auth\LoginController@logout');
-  Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+  Route::get('/follower-list', 'FollowsController@followerList')->name('followerList');
 });

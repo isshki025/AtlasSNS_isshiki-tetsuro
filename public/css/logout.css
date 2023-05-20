@@ -47,7 +47,7 @@ h2,
     text-align: center;
 }
 
-form p:first-of-type,
+form .title:first-of-type,
 h2 {
     margin-bottom: 28px;
 }
@@ -119,4 +119,14 @@ p a {
 
 #clear p:nth-child(4) {
     margin-bottom: 20px;
+}
+
+.error-wrapper {
+    position: relative;
+}
+
+div .error {
+    font-size: .75rem;
+    color: #ed3a50;
+    text-align: end;
 }

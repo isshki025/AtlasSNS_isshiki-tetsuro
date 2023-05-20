@@ -1,10 +1,17 @@
 @extends('layouts.logout')
 
 @section('content')
-<!-- 適切なURLを入力してください -->
 {!! Form::open(['url' => '/login']) !!}
 
-<p>AtlasSNSへようこそ</p>
+<p class="title">AtlasSNSへようこそ</p>
+
+@if ($errors->any())
+<div class="error-wrapper">
+  @foreach ($errors->all() as $error)
+  <p class="error">{{ $error }}</p>
+  @endforeach
+</div>
+@endif
 
 {{ Form::label('mail address') }}
 {{ Form::text('mail',null,['class' => 'input']) }}
