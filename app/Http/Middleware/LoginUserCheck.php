@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class LoginUserCheck
 {
@@ -18,7 +19,7 @@ class LoginUserCheck
         if (Auth::check()) {
             return $next($request);
         } else {
-            return redirect(route('login'));
+            return redirect('/login');
         }
     }
 }
