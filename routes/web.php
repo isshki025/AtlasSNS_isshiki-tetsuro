@@ -18,16 +18,16 @@ use Illuminate\Support\Facades\Auth;
 
 
 //ログアウト中のページ
-Route::group(['middleware' => ['guest']], function () {
-  Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-  Route::post('/login', 'Auth\LoginController@login');
 
-  Route::get('/register', 'Auth\RegisterController@register');
-  Route::post('/register', 'Auth\RegisterController@register');
+// Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
 
-  Route::get('/added', 'Auth\RegisterController@added');
-  Route::post('/added', 'Auth\RegisterController@added');
-});
+Route::get('/register', 'Auth\RegisterController@register');
+Route::post('/register', 'Auth\RegisterController@register');
+
+Route::get('/added', 'Auth\RegisterController@added');
+Route::post('/added', 'Auth\RegisterController@added');
+
 
 Route::middleware(['loginUserCheck'])->group(function () {
   Route::get('/top', 'PostsController@index');
@@ -36,6 +36,7 @@ Route::middleware(['loginUserCheck'])->group(function () {
   Route::delete('/posts/{post}', 'PostsController@destroy')->name('posts.destroy');
 
   Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+  Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
   Route::get('/profile', 'UsersController@edit')->name('profile.edit');
   Route::post('/profile', 'UsersController@update')->name('profile.update');
