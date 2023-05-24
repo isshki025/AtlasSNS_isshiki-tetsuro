@@ -99,7 +99,7 @@ class UsersController extends Controller
 
     public function follow(Request $request, User $user)
     {
-        $request->user()->following()->attach($user->id);
+        $request->user()->followings()->attach($user->id);
 
         // Check if a return URL exists in the session
         if (session()->has('return_url')) {
@@ -111,7 +111,7 @@ class UsersController extends Controller
 
     public function unfollow(Request $request, User $user)
     {
-        $request->user()->following()->detach($user->id);
+        $request->user()->followings()->detach($user->id);
 
         // Check if a return URL exists in the session
         if (session()->has('return_url')) {

@@ -55,7 +55,7 @@ class FollowsController extends Controller
     public function followCount()
     {
         $user = Auth::user();
-        $count = $user->following()->count();
+        $count = $user->followings()->count();
         return $count;
     }
 
@@ -67,13 +67,13 @@ class FollowsController extends Controller
     }
     public function store(User $user)
     {
-        Auth::user()->following()->attach($user);
+        Auth::user()->followings()->attach($user);
         return back();
     }
 
     public function destroy(User $user)
     {
-        Auth::user()->following()->detach($user);
+        Auth::user()->followings()->detach($user);
         return back();
     }
 }

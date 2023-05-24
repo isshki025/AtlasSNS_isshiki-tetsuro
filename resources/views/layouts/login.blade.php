@@ -24,8 +24,8 @@
 <body>
     <header>
         <div id="head">
-            <h1><a href="/top"><img src="{{ asset('storage/images/atlas.png') }}"></a></h1>
-            <div class="head_nav" id="">
+            <h1><a href="/top"><img src="images/atlas.png"></a></h1>
+            <div class=" head_nav" id="">
                 <div class="head_user" id="">
                     <p>{{ Auth::user()->username }} さん</p>
                     <button type="button" name="mene" id="toggleBtn"></button>

@@ -17,7 +17,7 @@
     <li class="search-item">
       <img class="user-image" src="storage/images/{{ $user->images }}" alt="アイコン">
       <p class="follow-btn">{{ $user->username }}</p>
-      @if (Auth::user()->following->contains($user->id))
+      @if (Auth::user()->followings->contains($user->id))
       <form class="follows-btn" action="{{ route('users.unfollow', $user) }}" method="post">
         @csrf
         @method('DELETE')
